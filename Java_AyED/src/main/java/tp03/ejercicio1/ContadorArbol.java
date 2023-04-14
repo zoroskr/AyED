@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package tp03.ejercicio1;
 
 import tp02.ejercicio1.ListaDeEnterosConArreglos;
@@ -17,18 +12,38 @@ public class ContadorArbol {
         this.arbol = arbol;
     }
 
-    
-    public ListaDeEnterosConArreglos numerosPares(ArbolBinario<Integer> a){
-        if (arbol.tieneHijoIzquierdo()){
-            numerosPares(arbol.getHijoIzquierdo());
-        }
-        if (arbol.getDato() % 2 == 0){
-            lista.agregarInicio(arbol.getDato());
-        }
-        if (arbol.tieneHijoDerecho()){
-            numerosPares(arbol.getHijoDerecho());;
-        }
-        return lista;
+    public ListaDeEnterosConArreglos numerosParesInOrden(ArbolBinario<Integer> a){
+         ListaDeEnterosConArreglos lista   = new ListaDeEnterosConArreglos();
+         numerosParesInOrdenRecursivo(a, lista);
+         return lista;
     }
     
+    public ListaDeEnterosConArreglos numerosParesPostOrden(ArbolBinario<Integer> a){
+         ListaDeEnterosConArreglos lista   = new ListaDeEnterosConArreglos();
+         numerosParesPostOrdenRecursivo(a, lista);
+         return lista;
+    }
+    
+    private void numerosParesInOrdenRecursivo(ArbolBinario<Integer> a, ListaDeEnterosConArreglos lista){
+        if (a.tieneHijoIzquierdo()) {
+             numerosParesInOrdenRecursivo (a.getHijoIzquierdo(), lista);
+        }
+        if (a.getDato() % 2 == 0){
+            lista.agregarInicio(a.getDato());
+        }
+        if (a.tieneHijoDerecho()) {
+            numerosParesInOrdenRecursivo (a.getHijoDerecho(), lista);
+        }
+    }
+    private void numerosParesPostOrdenRecursivo(ArbolBinario<Integer> a, ListaDeEnterosConArreglos lista){
+        if (a.tieneHijoIzquierdo()) {
+             numerosParesPostOrdenRecursivo (a.getHijoIzquierdo(), lista);
+        }
+        if (a.tieneHijoDerecho()) {
+             numerosParesPostOrdenRecursivo (a.getHijoDerecho(), lista);
+        }
+        if (a.getDato() % 2 == 0){
+            lista.agregarInicio(a.getDato());
+        }
+    }
 }
