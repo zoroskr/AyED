@@ -5,7 +5,9 @@
  */
 package Practica4;
 
+import tp02.ejercicio2.ListaEnlazadaGenerica;
 import tp02.ejercicio2.ListaGenerica;
+import tp03.ejercicio1.ArbolBinario;
 import tp04.ejercicio1.ArbolGeneral;
 
 /**
@@ -15,28 +17,19 @@ import tp04.ejercicio1.ArbolGeneral;
 public class RedDeAguaPotable {
     ArbolGeneral<Double> a;
     
-    public double minimoCaudal(double caudal){
-        double min = 99999;
-        return minimoCaudal(caudal, min);
-    }
     
-    private double minimoCaudal(double caudal, double min){
-        if (a.esVacio()){
-            return 0;
-        }
-        a.setDato(caudal);
+    private double minimoCaudal(double caudal, ArbolGeneral<Double> a){
         if (a.esHoja()){
-            if ((a.getDato()) < min) {
-                min = a.getDato();
-            }
+            return caudal;
         }
-         
-         ListaGenerica<ArbolGeneral<Double>> lHijos = a.getHijos();
-         lHijos.comenzar();
-         while (!lHijos.fin()){
-             minimoCaudal(caudal / lHijos.tamanio(), min);
-         }
-         return min;
+        double caudal_actual = caudal / a.getHijos().tamanio();
+        double caudalMin = caudal_actual;
+        ListaGenerica<ArbolGeneral<Double>> hijos = a.getHijos();
+        hijos.comenzar();
+        while (!hijos.fin()){
+           caudalMin = Math.min(minimoCaudal(caudal_actual, hijos.proximo()), caudalMin);
+        }
+        return caudalMin;
     }
     
 }
